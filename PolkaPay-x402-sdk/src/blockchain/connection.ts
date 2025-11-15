@@ -76,19 +76,20 @@ export async function verifyConnection() {
 export async function getAssetHubApi() {
   try {
     const currentClient = getClient();
-
-    // This import will work after running: npx papi add assethub -n polkadot_asset_hub && npx papi
-    // Uncomment the import above first
-    // const typedApi = currentClient.getTypedApi(polkadot_asset_hub);
-
-    // For now, return unsafe API as placeholder
-    const unsafeApi = currentClient.getUnsafeApi();
-    return unsafeApi;
+    
+    // ✅ CORRECT: Use 'assethub'
+    const { assethub } = await import('@polkadot-api/descriptors');
+    
+    const typedApi = currentClient.getTypedApi(assethub);
+    console.log(`✓ TypedApi initialized for AssetHub`);
+    return typedApi;
   } catch (error) {
     console.error(`✗ Failed to get AssetHub API:`, error);
     throw error;
   }
 }
+
+
 
 /**
  * Disconnect and cleanup
