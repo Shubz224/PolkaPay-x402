@@ -6,8 +6,10 @@
   "type": "module",
   "scripts": {
     "dev": "tsx src/index.ts",
+    "transfer": "tsx src/transfer-usdc.ts",
     "build": "tsc",
     "clean": "rm -rf dist",
+    "test:phase3": "tsx src/index-phase3.ts",
     "papi:add": "npx papi add assethub -n polkadot_asset_hub",
     "papi:generate": "npx papi"
   },
