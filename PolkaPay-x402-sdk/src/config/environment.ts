@@ -1,19 +1,21 @@
-/**
- * Environment Configuration Loader
- */
-
 import fs from 'fs';
 import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export function loadEnvironment() {
-  // Load from .env.local
-  if (fs.existsSync('.env.local')) {
-    dotenv.config({ path: '.env.local' });
+  const envPath = path.join(process.cwd(), '.env.local');
+  if (fs.existsSync(envPath)) {
+    dotenv.config({ path: envPath });
   }
 
   const config = {
-    rpcEndpointWss: process.env.RPC_ENDPOINT_WSS || 'wss://statemint.api.onfinality.io/public-ws',
-    network: (process.env.NETWORK || 'mainnet') as 'mainnet' | 'testnet',
+    // ✅ CHANGE TO WESTEND ENDPOINT
+    rpcEndpointWss: process.env.RPC_ENDPOINT_WSS || 'wss://westend-asset-hub-rpc.polkadot.io',
+    network: (process.env.NETWORK || 'westend') as 'mainnet' | 'testnet' | 'westend',
     usdcAssetId: parseInt(process.env.USDC_ASSET_ID || '1337'),
     usdcDecimals: parseInt(process.env.USDC_DECIMALS || '6'),
     logLevel: process.env.LOG_LEVEL || 'info',
